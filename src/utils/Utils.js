@@ -61,3 +61,16 @@ export const oklchToRGBA = (oklchColor) => {
   
   return computedColor;
 };
+export const pct = v => Math.round(v * 100) + '%';
+
+export function getSkills(J, L, job, level) {
+  if (level === 'All') return { n: J[job].postings, s: J[job].skills };
+  const o = L[job][level];
+  if (!o) return { n: 0, s: [] };
+  return {
+    n: o.postings,
+    s: Object.entries(o.skills).map(([skill, share]) => ({
+      skill, share, count: Math.round(share * o.postings),
+    })),
+  };
+}

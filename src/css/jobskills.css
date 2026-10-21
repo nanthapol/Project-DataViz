@@ -1,0 +1,361 @@
+.jsn {
+  --card: #fff; --tx: #111827; --mu: #6b7280; --bd: #e5e7eb;
+  --ac: #6d5ef0; --acbg: #ece9fe; --cv: #f8f9fb;
+  --job: #3b82f6; --sk: #10b981; --fam: #8b5cf6; --sh: #f59e0b;
+  color: var(--tx); color-scheme: light;
+}
+.dark .jsn {
+  --card: #171b24; --tx: #e8ebf2; --mu: #9aa3b5;
+  --bd: #262c3a; --ac: #9a8cff; --acbg: #262244; --cv: #12161e;
+  color-scheme: dark;
+}
+[data-theme="dark"] .jsn {
+  --card: #171b24; --tx: #e8ebf2; --mu: #9aa3b5;
+  --bd: #262c3a; --ac: #9a8cff; --acbg: #262244; --cv: #12161e;
+}
+
+/* ---------- หัวหน้า + ปุ่ม drop down Level ---------- */
+.jsn .head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 22px; gap: 12px; }
+.jsn h1 { font-size: 30px; font-weight: 700; margin: 0; letter-spacing: -.02em; }
+.jsn .dd { position: relative; }
+.jsn .dd-btn {
+  display: flex; align-items: center; gap: 6px; padding: 9px 14px; border-radius: 10px;
+  border: 1px solid var(--bd); background: var(--card); color: var(--tx); cursor: pointer; font: inherit;
+}
+.jsn .dd-btn b { color: var(--ac); font-weight: 600; }
+.jsn .dd-menu {
+  position: absolute; right: 0; top: calc(100% + 6px); z-index: 20; min-width: 160px; margin: 0; padding: 6px; list-style: none;
+  background: var(--card); border: 1px solid var(--bd); border-radius: 12px; box-shadow: 0 8px 24px rgba(0,0,0,.15);
+}
+.jsn .dd-menu button {
+  width: 100%; text-align: left; padding: 8px 10px; border: 0; border-radius: 8px;
+  background: none; color: var(--tx); cursor: pointer; font: inherit;
+}
+.jsn .dd-menu button:hover { background: var(--cv); }
+.jsn .dd-menu button.on { background: var(--acbg); color: var(--ac); font-weight: 600; }
+
+/* ---------- เลย์เอาต์ ---------- */
+.jsn .grid { display: grid; grid-template-columns: 300px minmax(0, 1fr); gap: 18px; align-items: start; }
+.jsn .grid.full { grid-template-columns: minmax(0, 1fr); }
+.jsn .card { background: var(--card); border: 1px solid var(--bd); border-radius: 14px; padding: 20px; margin-bottom: 18px; }
+.jsn .card h2 { font-size: 16px; font-weight: 600; margin: 0 0 14px; }
+
+/* ---------- รายการเลือกตำแหน่ง (พับได้) ---------- */
+.jsn .ph { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
+.jsn .ph h2 { margin: 0; }
+.jsn .fam { font-weight: 600; color: var(--mu); margin: 12px 0 4px; }
+.jsn .opt { display: flex; align-items: center; gap: 8px; padding: 5px 6px; border-radius: 8px; cursor: pointer; }
+.jsn .opt:hover { background: var(--cv); }
+.jsn .opt.dis { opacity: .4; cursor: not-allowed; }
+.jsn .opt span { margin-left: auto; color: var(--mu); font-size: 12px; }
+.jsn input[type=checkbox] { accent-color: var(--ac); width: 16px; height: 16px; }
+.jsn .cnt { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
+.jsn .cnt b { color: var(--ac); }
+.jsn .lk { background: none; border: 0; color: var(--ac); cursor: pointer; font: inherit; }
+
+/* ---------- การ์ดกราฟ ---------- */
+.jsn .top { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; padding-bottom: 12px; border-bottom: 1px solid var(--bd); margin-bottom: 14px; }
+.jsn .top h2 { margin: 0; }
+.jsn .lg2 { display: flex; gap: 14px; color: var(--mu); font-size: 12px; flex-wrap: wrap; }
+.jsn .lg2 b { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 5px; vertical-align: -1px; }
+.jsn .seg { display: flex; gap: 6px; align-items: center; margin-bottom: 10px; color: var(--mu); flex-wrap: wrap; }
+.jsn .seg .sp { margin-left: auto; }
+.jsn .seg button { border: 1px solid var(--bd); background: var(--card); color: var(--tx); padding: 4px 10px; border-radius: 8px; cursor: pointer; font: inherit; }
+.jsn .seg button.on { background: var(--acbg); color: var(--ac); border-color: var(--ac); }
+.jsn .seg button.open-btn { background: var(--acbg); color: var(--ac); border-color: var(--ac); font-weight: 600; }
+
+.jsn #cv { background: var(--cv); border-radius: 10px; height: 600px; position: relative; overflow: hidden; }
+.jsn svg { width: 100%; height: 100%; display: block; }
+.jsn svg text { pointer-events: none; paint-order: stroke; stroke: var(--cv); stroke-width: 4px; stroke-linejoin: round; }
+.jsn svg text.skt { fill: var(--mu); font-size: 12px; }
+.jsn svg text.jobt { fill: var(--tx); font-size: 24px; font-weight: 700; }   /* ใหญ่กว่าทักษะ 2 เท่า */
+.jsn .dim { opacity: .12; }
+.jsn #tt { position: absolute; pointer-events: none; background: var(--tx); color: var(--card); padding: 8px 10px; border-radius: 8px; font-size: 12px; max-width: 240px; display: none; z-index: 4; }
+.jsn .empty { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; color: var(--mu); text-align: center; padding: 20px; }
+.jsn .note { color: var(--mu); font-size: 12px; margin: 10px 0 0; }
+
+/* ---------- Top Demanded Skills แนวนอน ---------- */
+.jsn .tsrow { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 18px; }
+.jsn .tsn { font-weight: 600; }
+.jsn .tsb { height: 6px; background: var(--cv); border-radius: 3px; margin: 6px 0; }
+.jsn .tsb i { display: block; height: 100%; background: var(--sk); border-radius: 3px; }
+.jsn .tsi em { font-style: normal; color: var(--mu); font-size: 12px; }
+
+@media (max-width: 900px) {
+  .jsn .grid { grid-template-columns: 1fr; }
+  .jsn #cv { height: 480px; }
+  .jsn svg text.jobt { font-size: 18px; }
+}
+/* ---------- Fonts: Poppins (หัวข้อ/ตัวเลข) + Manrope (เนื้อหา) + Mitr (ไทย) ---------- */
+.jsn {
+  --f-head: 'Poppins', 'Mitr', sans-serif;
+  --f-body: 'Manrope', 'Mitr', sans-serif;
+  font-family: var(--f-body);
+}
+.jsn button, .jsn select, .jsn input { font-family: inherit; }
+
+.jsn h1 { font-family: var(--f-head); font-weight: 700; }
+.jsn .card h2 { font-family: var(--f-head); font-weight: 600; }
+.jsn .fam { font-family: var(--f-head); font-weight: 500; }
+.jsn .dd-btn b { font-family: var(--f-head); font-weight: 600; }
+
+/* ชื่อตำแหน่งในกราฟ + ตัวเลข KPI */
+.jsn svg text.jobt { font-family: var(--f-head); font-weight: 600; }
+.jsn svg text.skt { font-family: var(--f-body); font-weight: 500; }
+.jsn .tsn { font-family: var(--f-head); font-weight: 500; }
+.jsn .tsi em { font-family: var(--f-head); font-weight: 500; }
+.jsn .cnt b, .jsn .opt span { font-family: var(--f-head); }
+/* ---------- Filter note ---------- */
+.jsn .fnote { background: var(--cv); border-radius: 10px; padding: 10px 12px; margin-bottom: 10px; font-size: 13px; }
+.jsn .fnote b { color: var(--ac); }
+.jsn .fnote span { display: block; color: var(--mu); font-size: 12px; margin-top: 4px; }
+
+/* ---------- เส้นในกราฟ: ไฮไลต์ / ลดความเด่น ---------- */
+.jsn line.ln { transition: stroke-opacity .15s; }
+.jsn line.ln.hi { stroke: var(--ac); stroke-opacity: 1; }
+.jsn line.ln.dim { opacity: .06; }
+.jsn svg text.elbl { fill: var(--ac); font-size: 12px; font-weight: 700; font-family: var(--f-head); transition: opacity .15s; }
+
+/* ---------- Top skills ---------- */
+.jsn .tsn .rk { display: inline-block; width: 20px; color: var(--ac); font-family: var(--f-head); }
+
+/* ---------- Insights ---------- */
+.jsn .ins { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 14px; margin-bottom: 18px; }
+.jsn .ins-i { background: var(--cv); border-radius: 12px; padding: 14px; }
+.jsn .ins-i small { color: var(--mu); display: block; margin-bottom: 4px; }
+.jsn .ins-i > b { font-family: var(--f-head); font-size: 18px; display: block; }
+.jsn .ins-i p { margin: 6px 0 0; font-size: 13px; color: var(--mu); }
+.jsn .ins-i p b { color: var(--tx); }
+
+.jsn .cmp { border-top: 1px solid var(--bd); padding-top: 14px; }
+.jsn .cmp-h { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 6px; }
+.jsn .cmp-h h3 { font-family: var(--f-head); font-size: 15px; margin: 0 8px 0 0; }
+.jsn .cmp-h select { width: auto; min-width: 170px; }
+.jsn .cmp-g { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; margin-top: 10px; }
+.jsn .cmp-g h4 { font-size: 13px; color: var(--mu); margin: 0 0 6px; font-weight: 600; }
+.jsn .cmp-g p { margin: 0 0 6px; font-size: 13px; }
+.jsn .cmp-g em { display: block; font-style: normal; color: var(--mu); font-size: 12px; }
+
+.jsn a.go { display: inline-block; color: var(--ac); font-weight: 600; text-decoration: none; padding: 8px 2px; margin-bottom: 14px; }
+.jsn a.go:hover { text-decoration: underline; }
+.jsn .goRow { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+.jsn .goRow .open-btn { border: 1px solid var(--ac); background: var(--acbg); color: var(--ac); padding: 6px 12px; border-radius: 8px; cursor: pointer; font: inherit; font-weight: 600; margin-bottom: 14px; }
+
+/* =============== Glass / lavender theme =============== */
+/* =============== Soft pastel theme =============== */
+.jsn {
+  --card: #ffffff;
+  --card-solid: #ffffff;
+  --tx: #1c2430;
+  --mu: #6b7480;
+  --bd: #e6e8ea;
+  --ac: #1c2430;
+  --acbg: #d3e4e0;
+  --cv: #eaf2f0;
+  --job: #1c2430;
+  --sk: #5fa898;
+  --fam: #b79fe0;
+  --sh: #f06fa8;
+  --acfill: #1c2430;
+  --onac: #ffffff;
+  --p1: #d3e4e0;   /* มิ้นต์ */
+  --p2: #fed5e9;   /* ชมพู */
+  --p3: #fde4a3;   /* เหลืองเนย */
+  --p4: #d8cbe8;   /* ม่วงอ่อน */
+}
+.dark .jsn,
+[data-theme="dark"] .jsn {
+  --card: #1d242c;
+  --card-solid: #232b34;
+  --tx: #eef1f4;
+  --mu: #a3adb8;
+  --bd: #2c353f;
+  --ac: #eef1f4;
+  --acbg: #27403f;
+  --cv: #18211f;
+  --job: #f1f1f1;
+  --sk: #7cc4b4;
+  --fam: #b79fe0;
+  --sh: #f27fb0;
+  --acfill: #f1f1f1;
+  --onac: #1c2430;
+  --p1: #27403f;
+  --p2: #4a2f41;
+  --p3: #4a4224;
+  --p4: #3a3355;
+}
+
+/* ---------- พื้นหลัง / แถบข้าง / Header ---------- */
+body:has(.jsn) { background: #f4f4f4 !important; }
+html.dark body:has(.jsn) { background: #14181d !important; }
+
+body:has(.jsn) #sidebar {
+  background: #ffffff !important;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+html.dark body:has(.jsn) #sidebar { background: #1d242c !important; }
+body:has(.jsn) header::before { background: transparent !important; }
+body:has(.jsn) header > div > div { border-color: transparent !important; }
+
+/* เมนูที่เลือกในแถบข้าง = แคปซูลสีดำ */
+body:has(.jsn) #sidebar li[class*="bg-violet"] {
+  background: #1c2430 !important;
+  border-radius: 999px;
+}
+body:has(.jsn) #sidebar li[class*="bg-violet"] a,
+body:has(.jsn) #sidebar li[class*="bg-violet"] .text-violet-500 { color: #ffffff !important; }
+body:has(.jsn) #sidebar li[class*="bg-violet"] svg { fill: #ffffff !important; color: #ffffff !important; }
+html.dark body:has(.jsn) #sidebar li[class*="bg-violet"] { background: #f1f1f1 !important; }
+html.dark body:has(.jsn) #sidebar li[class*="bg-violet"] a,
+html.dark body:has(.jsn) #sidebar li[class*="bg-violet"] .text-violet-500 { color: #1c2430 !important; }
+html.dark body:has(.jsn) #sidebar li[class*="bg-violet"] svg { fill: #1c2430 !important; color: #1c2430 !important; }
+
+/* ---------- หัวข้อใหญ่ ---------- */
+.jsn h1 { font-size: 40px; font-weight: 600; letter-spacing: -.02em; color: var(--tx); }
+.jsn .card h2 { font-size: 20px; font-weight: 600; }
+
+/* ---------- การ์ด ---------- */
+.jsn .card {
+  background: var(--card);
+  border: 0;
+  border-radius: 28px;
+  padding: 24px;
+  box-shadow: none;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+.jsn .top { border-bottom: 1px solid var(--bd); }
+/* การ์ดเลือกตำแหน่ง = มิ้นต์ */
+.jsn .grid:not(.full) > div:first-child > .card { background: var(--p1); }
+.jsn .opt:hover { background: rgba(255, 255, 255, .55); }
+.dark .jsn .opt:hover { background: rgba(255, 255, 255, .08); }
+.jsn .fam { color: var(--tx); opacity: .6; }
+
+/* ---------- ปุ่ม / dropdown ---------- */
+.jsn .seg button, .jsn .dd-btn, .jsn select { border-radius: 999px; }
+.jsn .dd-btn, .jsn .seg button { border: 1px solid var(--bd); }
+.jsn .dd-menu, .jsn .pop { background: var(--card-solid); border-radius: 18px; border: 1px solid var(--bd); }
+.jsn .dd-menu button { border-radius: 12px; }
+.jsn .seg button.on,
+.jsn .seg button.open-btn,
+.jsn .dd-menu button.on,
+.jsn .goRow .open-btn {
+  background: var(--acfill);
+  color: var(--onac);
+  border-color: var(--acfill);
+}
+
+/* ---------- กราฟ ---------- */
+.jsn #cv { background: var(--cv); border-radius: 22px; }
+.jsn line.ln.hi { stroke: var(--tx); }
+.jsn svg text.elbl { fill: var(--tx); }
+.jsn #tt { background: var(--tx); color: var(--card); }
+
+/* ---------- แถบสรุปตัวกรอง = เหลืองเนย ---------- */
+.jsn .fnote { background: var(--p3); border-radius: 18px; padding: 12px 16px; color: var(--tx); }
+.jsn .fnote b { color: var(--tx); }
+.jsn .fnote span { color: var(--tx); opacity: .7; }
+
+/* ---------- Top Demanded Skills: แต่ละช่องเป็นสีพาสเทลวนไป ---------- */
+.jsn .tsrow { gap: 14px; }
+.jsn .tsi { border-radius: 22px; padding: 16px 18px; }
+.jsn .tsi:nth-child(4n+1) { background: var(--p1); }
+.jsn .tsi:nth-child(4n+2) { background: var(--p2); }
+.jsn .tsi:nth-child(4n+3) { background: var(--p3); }
+.jsn .tsi:nth-child(4n+4) { background: var(--p4); }
+.jsn .tsn { font-size: 16px; }
+.jsn .tsn .rk { color: var(--tx); opacity: .55; }
+.jsn .tsb { background: rgba(255, 255, 255, .7); height: 6px; }
+.dark .jsn .tsb { background: rgba(0, 0, 0, .3); }
+.jsn .tsb i { background: var(--tx); }
+.jsn .tsi em { color: var(--tx); opacity: .7; }
+
+/* ---------- Key findings ---------- */
+.jsn .ins-i { border-radius: 22px; padding: 18px; }
+.jsn .ins-i:nth-child(4n+1) { background: var(--p1); }
+.jsn .ins-i:nth-child(4n+2) { background: var(--p2); }
+.jsn .ins-i:nth-child(4n+3) { background: var(--p3); }
+.jsn .ins-i:nth-child(4n+4) { background: var(--p4); }
+.jsn .ins-i small, .jsn .ins-i p { color: var(--tx); opacity: .75; }
+.jsn .ins-i > b { font-size: 20px; }
+.jsn .cmp-g > div { border-radius: 22px; padding: 16px; }
+.jsn .cmp-g > div:nth-child(1) { background: var(--p2); }
+.jsn .cmp-g > div:nth-child(2) { background: var(--p3); }
+.jsn .cmp-g > div:nth-child(3) { background: var(--p1); }
+.jsn .cmp-g h4, .jsn .cmp-g em { color: var(--tx); opacity: .7; }
+
+@media (max-width: 900px) {
+  .jsn h1 { font-size: 30px; }
+}
+
+/* ---------- Horizontal bar chart ---------- */
+.jsn .bc-h { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 14px; }
+.jsn .bc-h h2 { margin: 0; }
+.jsn .bc-ctl { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.jsn .bc-seg { display: flex; gap: 4px; background: var(--cv); padding: 4px; border-radius: 999px; }
+.jsn .bc-seg button { border: 0; background: none; color: var(--tx); padding: 5px 12px; border-radius: 999px; cursor: pointer; font: inherit; }
+.jsn .bc-seg button.on { background: var(--acfill, var(--ac)); color: var(--onac, #fff); }
+.jsn .bc-top { display: flex; align-items: center; gap: 8px; color: var(--mu); }
+.jsn .bc-top select { width: auto; padding: 6px 10px; }
+
+.jsn .bc { margin-top: 6px; }
+.jsn .bc-r { display: grid; grid-template-columns: 170px minmax(0, 1fr); align-items: center; gap: 12px; margin-bottom: 8px; }
+.jsn .bc-l { text-align: right; font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.jsn .bc-l span { color: var(--mu); font-weight: 500; margin-right: 8px; }
+.jsn .bc-t {
+  display: flex; align-items: center; height: 30px;
+  background-image: linear-gradient(to right, var(--bd) 1px, transparent 1px);
+  background-size: 25% 100%;
+  border-right: 1px solid var(--bd);
+}
+.jsn .bc-t i { display: block; height: 20px; border-radius: 0 999px 999px 0; background: var(--sk); flex: none; min-width: 3px; transition: width .25s; }
+.jsn .bc-t b { margin-left: 8px; font-size: 12px; font-weight: 600; white-space: nowrap; }
+.jsn .bc-ax { margin-bottom: 0; }
+.jsn .bc-ticks { position: relative; height: 20px; }
+.jsn .bc-ticks span { position: absolute; top: 2px; transform: translateX(-50%); font-size: 11px; color: var(--mu); }
+.jsn .bc-ticks span:last-child { transform: translateX(-100%); }
+.jsn .bc-ticks span:first-child { transform: none; }
+
+@media (max-width: 900px) {
+  .jsn .bc-r { grid-template-columns: 110px minmax(0, 1fr); }
+}
+/* กันตัวเลขทับไอคอนลูกศรของ select (ใช้กับทุก select ในหน้านี้) */
+.jsn select {
+  padding: 6px 36px 6px 14px;
+  min-width: 76px;
+  background-position: right 12px center;
+}
+.jsn .bc-top select { width: auto; }
+.jsn .cmp-h select { min-width: 190px; }
+
+/* ---------- Skill stacks ---------- */
+.jsn .tabs { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 12px; }
+.jsn .tabs button { border: 1px solid var(--bd); background: var(--card); color: var(--tx); padding: 6px 14px; border-radius: 999px; cursor: pointer; font: inherit; }
+.jsn .tabs button.on { background: var(--acfill, var(--ac)); color: var(--onac, #fff); border-color: var(--acfill, var(--ac)); }
+.jsn .st-sum { margin: 0 0 10px; }
+.jsn .chip-legend { display: flex; gap: 16px; flex-wrap: wrap; color: var(--mu); font-size: 12px; margin-bottom: 14px; }
+.jsn .chip-legend .chip { display: inline-block; width: 12px; height: 12px; padding: 0; margin-right: 6px; vertical-align: -2px; }
+.jsn .st-row { background: var(--cv); border-radius: 18px; padding: 14px 16px; margin-bottom: 10px; }
+.jsn .st-h { display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
+.jsn .st-h span { color: var(--mu); font-size: 13px; }
+.jsn .st-bar { height: 6px; background: var(--card); border-radius: 3px; margin: 8px 0 10px; }
+.jsn .st-bar i { display: block; height: 100%; border-radius: 3px; background: var(--tx); }
+.jsn .chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.jsn .chip { padding: 4px 12px; border-radius: 999px; font-size: 13px; font-weight: 600; border: 1px solid transparent; }
+.jsn .chip.core { background: var(--tx); color: var(--card-solid, #fff); }
+.jsn .chip.mid { background: var(--card); color: var(--tx); border-color: var(--bd); }
+.jsn .chip.uniq { background: var(--p2, #fed5e9); color: #1c2430; }
+.jsn .st-only { margin: 8px 0 0; font-size: 12px; color: var(--mu); }
+.jsn .st-only b { color: var(--tx); }
+
+/* ---------- Company check ---------- */
+.jsn .cc-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; margin-bottom: 16px; }
+.jsn .cc-stats > div { background: var(--p3, #fde4a3); border-radius: 18px; padding: 14px 16px; color: #1c2430; }
+.jsn .cc-stats > div:nth-child(2) { background: var(--p1, #d3e4e0); }
+.jsn .cc-stats b { display: block; font-family: var(--f-head, inherit); font-size: 26px; }
+.jsn .cc-stats span { font-size: 13px; opacity: .8; }
+.jsn .cc-wrap { overflow-x: auto; }
+.jsn .cc-t { width: 100%; border-collapse: collapse; font-size: 13px; }
+.jsn .cc-t th { text-align: left; color: var(--mu); font-weight: 600; padding: 8px 10px; border-bottom: 1px solid var(--bd); }
+.jsn .cc-t td { padding: 8px 10px; border-bottom: 1px solid var(--bd); }

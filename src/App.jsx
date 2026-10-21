@@ -1,33 +1,27 @@
 import React, { useEffect } from 'react';
-import {
-  Routes,
-  Route,
-  useLocation
-} from 'react-router-dom';
+import { Routes, Route, useLocation } from 'react-router-dom';
 
 import './css/style.css';
-
 import './charts/ChartjsConfig';
 
-// Import pages
-import Dashboard from './pages/Dashboard';
+import JobSkills from './pages/JobSkills';
+import KeyFindings from './pages/KeyFindings';
 
 function App() {
-
   const location = useLocation();
 
   useEffect(() => {
-    document.querySelector('html').style.scrollBehavior = 'auto'
-    window.scroll({ top: 0 })
-    document.querySelector('html').style.scrollBehavior = ''
-  }, [location.pathname]); // triggered on route change
+    document.querySelector('html').style.scrollBehavior = 'auto';
+    window.scroll({ top: 0 });
+    document.querySelector('html').style.scrollBehavior = '';
+  }, [location.pathname]);
 
   return (
-    <>
-      <Routes>
-        <Route exact path="/" element={<Dashboard />} />
-      </Routes>
-    </>
+    <Routes>
+      <Route path="/" element={<JobSkills />} />
+      <Route path="/job-skills" element={<JobSkills />} />
+      <Route path="/key-findings" element={<KeyFindings />} />
+    </Routes>
   );
 }
 
