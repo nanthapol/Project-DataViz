@@ -68,7 +68,7 @@
 .jsn svg { width: 100%; height: 100%; display: block; }
 .jsn svg text { pointer-events: none; paint-order: stroke; stroke: var(--cv); stroke-width: 4px; stroke-linejoin: round; }
 .jsn svg text.skt { fill: var(--mu); font-size: 12px; }
-.jsn svg text.jobt { fill: var(--tx); font-size: 24px; font-weight: 700; }   /* ใหญ่กว่าทักษะ 2 เท่า */
+.jsn svg text.jobt { fill: var(--tx); font-size: 24px; font-weight: 700; }
 .jsn .dim { opacity: .12; }
 .jsn #tt { position: absolute; pointer-events: none; background: var(--tx); color: var(--card); padding: 8px 10px; border-radius: 8px; font-size: 12px; max-width: 240px; display: none; z-index: 4; }
 .jsn .empty { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; color: var(--mu); text-align: center; padding: 20px; }
@@ -99,7 +99,6 @@
 .jsn .fam { font-family: var(--f-head); font-weight: 500; }
 .jsn .dd-btn b { font-family: var(--f-head); font-weight: 600; }
 
-/* ชื่อตำแหน่งในกราฟ + ตัวเลข KPI */
 .jsn svg text.jobt { font-family: var(--f-head); font-weight: 600; }
 .jsn svg text.skt { font-family: var(--f-body); font-weight: 500; }
 .jsn .tsn { font-family: var(--f-head); font-weight: 500; }
@@ -141,7 +140,6 @@
 .jsn .goRow { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
 .jsn .goRow .open-btn { border: 1px solid var(--ac); background: var(--acbg); color: var(--ac); padding: 6px 12px; border-radius: 8px; cursor: pointer; font: inherit; font-weight: 600; margin-bottom: 14px; }
 
-/* =============== Glass / lavender theme =============== */
 /* =============== Soft pastel theme =============== */
 .jsn {
   --card: #ffffff;
@@ -158,10 +156,10 @@
   --sh: #f06fa8;
   --acfill: #1c2430;
   --onac: #ffffff;
-  --p1: #d3e4e0;   /* มิ้นต์ */
-  --p2: #fed5e9;   /* ชมพู */
-  --p3: #fde4a3;   /* เหลืองเนย */
-  --p4: #d8cbe8;   /* ม่วงอ่อน */
+  --p1: #d3e4e0;
+  --p2: #fed5e9;
+  --p3: #fde4a3;
+  --p4: #d8cbe8;
 }
 .dark .jsn,
 [data-theme="dark"] .jsn {
@@ -198,7 +196,6 @@ html.dark body:has(.jsn) #sidebar { background: #1d242c !important; }
 body:has(.jsn) header::before { background: transparent !important; }
 body:has(.jsn) header > div > div { border-color: transparent !important; }
 
-/* เมนูที่เลือกในแถบข้าง = แคปซูลสีดำ */
 body:has(.jsn) #sidebar li[class*="bg-violet"] {
   background: #1c2430 !important;
   border-radius: 999px;
@@ -226,7 +223,6 @@ html.dark body:has(.jsn) #sidebar li[class*="bg-violet"] svg { fill: #1c2430 !im
   -webkit-backdrop-filter: none;
 }
 .jsn .top { border-bottom: 1px solid var(--bd); }
-/* การ์ดเลือกตำแหน่ง = มิ้นต์ */
 .jsn .grid:not(.full) > div:first-child > .card { background: var(--p1); }
 .jsn .opt:hover { background: rgba(255, 255, 255, .55); }
 .dark .jsn .opt:hover { background: rgba(255, 255, 255, .08); }
@@ -257,7 +253,7 @@ html.dark body:has(.jsn) #sidebar li[class*="bg-violet"] svg { fill: #1c2430 !im
 .jsn .fnote b { color: var(--tx); }
 .jsn .fnote span { color: var(--tx); opacity: .7; }
 
-/* ---------- Top Demanded Skills: แต่ละช่องเป็นสีพาสเทลวนไป ---------- */
+/* ---------- Top Demanded Skills ---------- */
 .jsn .tsrow { gap: 14px; }
 .jsn .tsi { border-radius: 22px; padding: 16px 18px; }
 .jsn .tsi:nth-child(4n+1) { background: var(--p1); }
@@ -320,7 +316,6 @@ html.dark body:has(.jsn) #sidebar li[class*="bg-violet"] svg { fill: #1c2430 !im
 @media (max-width: 900px) {
   .jsn .bc-r { grid-template-columns: 110px minmax(0, 1fr); }
 }
-/* กันตัวเลขทับไอคอนลูกศรของ select (ใช้กับทุก select ในหน้านี้) */
 .jsn select {
   padding: 6px 36px 6px 14px;
   min-width: 76px;
@@ -393,7 +388,6 @@ html.dark body:has(.jsn) #sidebar li[class*="bg-violet"] svg { fill: #1c2430 !im
 .jsn svg text.elbl { font-size: 14px; }
 .jsn #tt { font-size: 14px; max-width: 290px; }
 
-/* ปรับพื้นที่ให้พอดีกับตัวอักษรที่ใหญ่ขึ้น */
 .jsn .bc-r { grid-template-columns: 190px minmax(0, 1fr); }
 .jsn .bc-t { height: 32px; }
 .jsn .cc-stats b { font-size: 28px; }
@@ -403,6 +397,7 @@ html.dark body:has(.jsn) #sidebar li[class*="bg-violet"] svg { fill: #1c2430 !im
   .jsn .bc-r { grid-template-columns: 130px minmax(0, 1fr); }
 }
 
+/* ================= Skill Stacks / Company Check additions ================= */
 .jsn {
   --c-core: #6d5bd0;
   --c-mid: #aab4c3;
@@ -411,25 +406,53 @@ html.dark body:has(.jsn) #sidebar li[class*="bg-violet"] svg { fill: #1c2430 !im
   --c-weak: #e9a23b;
   --c-found: #2a9d8f;
 }
-.chip.core { background: var(--c-core); color: #fff; }
-.chip.mid  { background: color-mix(in srgb, var(--c-mid) 30%, transparent); border: 1px solid var(--c-mid); }
-.chip.uniq { background: color-mix(in srgb, var(--c-uniq) 25%, transparent); border: 1px solid var(--c-uniq); font-weight: 600; }
+.jsn .chip.core { background: var(--c-core); color: #fff; }
+.jsn .chip.mid  { background: color-mix(in srgb, var(--c-mid) 30%, transparent); border: 1px solid var(--c-mid); }
+.jsn .chip.uniq { background: color-mix(in srgb, var(--c-uniq) 25%, transparent); border: 1px solid var(--c-uniq); font-weight: 600; }
 
-.insight { background: color-mix(in srgb, var(--c-core) 8%, transparent); border-left: 4px solid var(--c-core);
+.jsn .insight { background: color-mix(in srgb, var(--c-core) 8%, transparent); border-left: 4px solid var(--c-core);
   border-radius: 8px; padding: 10px 14px; margin: 10px 0; }
-.insight p { margin: 0 0 4px; }
-.insight-sub span { display: block; font-size: .92em; }
+.jsn .insight p { margin: 0 0 4px; }
+.jsn .insight-sub span { display: block; font-size: .92em; }
 
-.base-note { background: #f1f4f8; border-radius: 8px; padding: 8px 12px; margin: 0 0 14px; font-size: .9em; }
+.jsn .base-note { background: color-mix(in srgb, currentColor 8%, transparent); color: inherit;
+  border-radius: 8px; padding: 10px 14px; margin: 0 0 14px; font-size: 1em; }
 
-.cc-headline { font-weight: 600; margin: 8px 0; }
-.cc-badge { display: inline-block; padding: 2px 8px; border-radius: 6px; border: 1px solid var(--c-none); color: inherit; }
-.cc-badge.none, .cc-badge.na { background: transparent; color: #66707c; }
-.cc-badge.weak  { border-color: var(--c-weak); }
-.cc-badge.found { border-color: var(--c-found); background: color-mix(in srgb, var(--c-found) 15%, transparent); }
-.cc-small { font-size: .8em; color: #66707c; }
-   .cc-stats span { opacity: .9; }
+.jsn .cc-headline { font-weight: 600; margin: 8px 0; }
+.jsn .cc-badge { display: inline-block; padding: 2px 8px; border-radius: 6px; border: 1px solid var(--c-none); color: inherit; white-space: normal; }
+.jsn .cc-badge.none, .jsn .cc-badge.na { background: transparent; color: inherit; opacity: .8; }
+.jsn .cc-badge.weak  { border-color: var(--c-weak); }
+.jsn .cc-badge.found { border-color: var(--c-found); background: color-mix(in srgb, var(--c-found) 15%, transparent); }
+.jsn .cc-small { font-size: .8em; color: inherit; opacity: .65; }
+.jsn .cc-stats span { opacity: .9; }
+.jsn .cc-t th small { font-weight: 400; opacity: .75; }
 
-   header button[aria-label*="theme" i],
-header .theme-toggle { display: none; }
-   .base-note { font-size: 1em; padding: 10px 14px; }
+/* ================= Mobile ================= */
+.jsn, .jsn .card, .jsn .grid > div { min-width: 0; }
+.jsn p, .jsn li { overflow-wrap: anywhere; }
+.jsn img { max-width: 100%; height: auto; }
+
+/* กราฟ: ลาก node ได้ ส่วนเลื่อน/ซูมหน้าเป็นของเบราว์เซอร์ */
+.jsn #cv svg { touch-action: none; }
+
+/* ตารางเลื่อนซ้ายขวาในกรอบของตัวเอง */
+.jsn .cc-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.jsn .cc-t { min-width: 640px; }
+
+@media (max-width: 900px) {
+  .jsn .grid, .jsn .grid.full { grid-template-columns: minmax(0, 1fr); }
+  .jsn .cc-stats { grid-template-columns: minmax(0, 1fr); }
+  .jsn #cv { height: 70vh; min-height: 420px; }
+  .jsn svg text.jobt { font-size: 15px; }
+}
+
+/* Top Skills bar chart: ย่อป้ายชื่อบนมือถือ และให้เลื่อนซ้ายขวาได้ถ้ายังล้น */
+.jsn .bc { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.jsn .bc-r, .jsn .bc-ax { min-width: 420px; }
+
+@media (max-width: 900px) {
+  .jsn .bc-r { grid-template-columns: 96px minmax(0, 1fr); gap: 8px; }
+  .jsn .bc-l { font-size: 13px; }
+  .jsn .bc-l span { margin-right: 4px; }
+  .jsn .bc-t b { font-size: 12px; }
+}

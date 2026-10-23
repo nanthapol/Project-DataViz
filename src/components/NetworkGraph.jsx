@@ -66,6 +66,10 @@ export default function NetworkGraph({ J, L, sel, level, minS }) {
     const hide = () => { tt.style.display = 'none'; };
 
     const g = svg.append('g');
+    const zoom = d3.zoom()
+    .scaleExtent([0.4, 4])
+    .on('zoom', e => g.attr('transform', e.transform));
+    svg.call(zoom).on('dblclick.zoom', null);
     const sLinks = links.filter(l => l.t === 's');
 
     // เส้น
@@ -74,7 +78,7 @@ export default function NetworkGraph({ J, L, sel, level, minS }) {
       .attr('stroke-width', d => d.t === 'f' ? 1 : 0.8 + d.w * 3.5)
       .attr('stroke-dasharray', d => d.t === 'f' ? '4 3' : null);
 
-    // พื้นที่ hover ของเส้น (บาง จึงทำเส้นใสหนาซ้อน)
+    // พื้นที่ hover ของเส้น
     const hit = g.selectAll('line.hit').data(sLinks).join('line').attr('class', 'hit')
       .attr('stroke', 'transparent').attr('stroke-width', 12)
       .on('mousemove', (e, d) => show(e,
@@ -92,7 +96,7 @@ export default function NetworkGraph({ J, L, sel, level, minS }) {
       .attr('dy', d => d.t === 'job' ? d.r + 24 : d.r + 17)
       .text(d => (d.t === 'family' ? '' : d.label));
 
-    // ป้ายตัวเลขบนเส้น (โผล่เฉพาะเส้นที่ถูกไฮไลต์)
+    // ป้ายตัวเลขบนเส้น
     const el = g.selectAll('text.elbl').data(sLinks).join('text').attr('class', 'elbl')
       .attr('text-anchor', 'middle').style('opacity', 0).text(d => pct(d.w));
 
@@ -134,17 +138,14 @@ export default function NetworkGraph({ J, L, sel, level, minS }) {
         }
         show(e, h);
       });
-    svg.on('click', () => setFocus(null));   // คลิกพื้นที่ว่างเพื่อล้างไฮไลต์
+    svg.on('click', () => setFocus(null));
 
     // ---------- force simulation ----------
     const k = Math.min(1.5, Math.max(1, W / 800));
     const sim = d3.forceSimulation(nodes)
       .force('link', d3.forceLink(links).id(d => d.id)
-       .distance(d => (d.t === 'f' ? 90 : 110 - d.w * 25) * k).strength(0.5))
+        .distance(d => (d.t === 'f' ? 90 : 110 - d.w * 25) * k).strength(0.5))
       .force('charge', d3.forceManyBody().strength(d => (d.t === 'job' ? -700 : -260) * k))
-      .force('link', d3.forceLink(links).id(d => d.id)
-        .distance(d => d.t === 'f' ? 90 : 110 - d.w * 25).strength(0.5))
-      .force('charge', d3.forceManyBody().strength(d => d.t === 'job' ? -700 : -260))
       .force('c', d3.forceCenter(W / 2, H / 2))
       .force('col', d3.forceCollide(d => d.t === 'job' ? d.r + 40 : d.r + 16))
       .force('x', d3.forceX(W / 2).strength(0.04))

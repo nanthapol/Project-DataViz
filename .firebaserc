@@ -1,5 +1,15 @@
 {
   "projects": {
     "default": "data-vizdemo"
-  }
+  },
+  "targets": {
+    "data-vizdemo": {
+      "hosting": {
+        "main": [
+          "Firstjobberinsight"
+        ]
+      }
+    }
+  },
+  "etags": {}
 }
