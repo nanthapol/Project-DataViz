@@ -52,7 +52,7 @@ export default function NetworkGraph({ J, L, sel, level, minS }) {
     });
     nodes.forEach(n => {
       if (n.t === 'skill') n.r = 5 + 2.5 * n.uses;
-      n.hw = n.label.length * (n.t === 'job' ? 7.8 : 3.6);
+      n.hw = n.label.length * (n.t === 'job' ? 7.8 : 4.2);
     });
 
     const tt = ttRef.current;
@@ -89,8 +89,8 @@ export default function NetworkGraph({ J, L, sel, level, minS }) {
     nd.append('text')
       .attr('class', d => d.t === 'job' ? 'jobt' : 'skt')
       .attr('text-anchor', 'middle')
-      .attr('dy', d => d.t === 'job' ? d.r + 24 : d.r + 14)
-      .text(d => d.label);
+      .attr('dy', d => d.t === 'job' ? d.r + 24 : d.r + 17)
+      .text(d => (d.t === 'family' ? '' : d.label));
 
     // ป้ายตัวเลขบนเส้น (โผล่เฉพาะเส้นที่ถูกไฮไลต์)
     const el = g.selectAll('text.elbl').data(sLinks).join('text').attr('class', 'elbl')
@@ -137,7 +137,11 @@ export default function NetworkGraph({ J, L, sel, level, minS }) {
     svg.on('click', () => setFocus(null));   // คลิกพื้นที่ว่างเพื่อล้างไฮไลต์
 
     // ---------- force simulation ----------
+    const k = Math.min(1.5, Math.max(1, W / 800));
     const sim = d3.forceSimulation(nodes)
+      .force('link', d3.forceLink(links).id(d => d.id)
+       .distance(d => (d.t === 'f' ? 90 : 110 - d.w * 25) * k).strength(0.5))
+      .force('charge', d3.forceManyBody().strength(d => (d.t === 'job' ? -700 : -260) * k))
       .force('link', d3.forceLink(links).id(d => d.id)
         .distance(d => d.t === 'f' ? 90 : 110 - d.w * 25).strength(0.5))
       .force('charge', d3.forceManyBody().strength(d => d.t === 'job' ? -700 : -260))
@@ -148,7 +152,7 @@ export default function NetworkGraph({ J, L, sel, level, minS }) {
       .on('tick', () => {
         nodes.forEach(n => {
           const padX = Math.max(n.r, n.hw) + 4;
-          const padB = n.t === 'job' ? 34 : 20;
+          const padB = n.t === 'job' ? 34 : 24;
           n.x = Math.max(padX, Math.min(W - padX, n.x));
           n.y = Math.max(n.r + 4, Math.min(H - n.r - padB, n.y));
         });

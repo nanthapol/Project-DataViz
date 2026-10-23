@@ -15,9 +15,43 @@ function Sidebar({
   const storedSidebarExpanded = localStorage.getItem("sidebar-expanded");
   const [sidebarExpanded, setSidebarExpanded] = useState(storedSidebarExpanded === null ? false : storedSidebarExpanded === "true");
 
-  // หน้าที่เปิดอยู่
-  const onNetwork = pathname === "/" || pathname.startsWith("/job-skills");
-  const onFindings = pathname.startsWith("/key-findings");
+  // เมนูทั้งหมด (path ของไอคอนขนาด 16x16)
+  const items = [
+    {
+      to: "/", label: "Job Skills Network",
+      on: pathname === "/" || pathname.startsWith("/job-skills"),
+      icon: [
+        "M5.936.278A7.983 7.983 0 0 1 8 0a8 8 0 1 1-8 8c0-.722.104-1.413.278-2.064a1 1 0 1 1 1.932.516A5.99 5.99 0 0 0 2 8a6 6 0 1 0 6-6c-.53 0-1.045.076-1.548.21A1 1 0 1 1 5.936.278Z",
+        "M6.068 7.482A2.003 2.003 0 0 0 8 10a2 2 0 1 0-.518-3.932L3.707 2.293a1 1 0 0 0-1.414 1.414l3.775 3.775Z",
+      ],
+    },
+    {
+      to: "/skill-stacks", label: "Skill Stacks",
+      on: pathname.startsWith("/skill-stacks"),
+      icon: ["M1 2h14v3H1V2Zm0 5h14v3H1V7Zm0 5h14v3H1v-3Z"],
+    },
+    {
+      to: "/company-check", label: "Company Check",
+      on: pathname.startsWith("/company-check"),
+      icon: ["M1 15V2l7-2 7 2v13H1Zm3-3v2h2v-2H4Zm0-4v2h2V8H4Zm0-4v2h2V4H4Zm6 8v2h2v-2h-2Zm0-4v2h2V8h-2Zm0-4v2h2V4h-2Z"],
+    },
+    {
+      to: "/top-skills", label: "Top Skills",
+      on: pathname.startsWith("/top-skills"),
+      icon: ["M1 9h3v6H1V9Zm5-4h3v10H6V5Zm5-4h3v14h-3V1Z"],
+    },
+    {
+      to: "/about-data", label: "About data",
+      on: pathname.startsWith("/about-data"),
+      icon: ["M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0Zm1 12H7V7h2v5Zm0-6H7V4h2v2Z"],
+    },
+  ];
+
+  // แบ่งกลุ่มเมนู
+  const groups = [
+    { title: "Insights", list: items.slice(0, 4) },
+    { title: "Data", list: items.slice(4) },
+  ];
 
   // close on click outside
   useEffect(() => {
@@ -90,50 +124,41 @@ function Sidebar({
 
         {/* Links */}
         <div className="space-y-8">
-          {/* Pages group */}
-          <div>
-            <h3 className="text-xs uppercase text-gray-400 dark:text-gray-500 font-semibold pl-3">
-              <span className="hidden lg:block lg:sidebar-expanded:hidden 2xl:hidden text-center w-6" aria-hidden="true">
-                •••
-              </span>
-              <span className="lg:hidden lg:sidebar-expanded:block 2xl:block">Analytics</span>
-            </h3>
+          {groups.map(g => (
+            <div key={g.title}>
+              <h3 className="text-sm uppercase text-gray-500 dark:text-gray-400 font-semibold pl-3">
+                <span className="hidden lg:block lg:sidebar-expanded:hidden 2xl:hidden text-center w-6" aria-hidden="true">
+                  •••
+                </span>
+                <span className="lg:hidden lg:sidebar-expanded:block 2xl:block">{g.title}</span>
+              </h3>
 
-            <ul className="mt-3">
-              {/* Job Skills Network */}
-              <li className={`px-3 py-2 rounded-lg mb-0.5 last:mb-0 ${onNetwork ? 'bg-violet-500/10 dark:bg-violet-500/20' : ''}`}>
-                <NavLink
-                  end
-                  to="/"
-                  className={`flex items-center font-medium ${onNetwork ? 'text-violet-500' : 'text-gray-800 dark:text-gray-100 hover:text-gray-900 dark:hover:text-white'}`}
-                >
-                  <svg className={`shrink-0 fill-current ${onNetwork ? 'text-violet-500' : 'text-gray-400 dark:text-gray-500'}`} xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16">
-                    <path d="M5.936.278A7.983 7.983 0 0 1 8 0a8 8 0 1 1-8 8c0-.722.104-1.413.278-2.064a1 1 0 1 1 1.932.516A5.99 5.99 0 0 0 2 8a6 6 0 1 0 6-6c-.53 0-1.045.076-1.548.21A1 1 0 1 1 5.936.278Z" />
-                    <path d="M6.068 7.482A2.003 2.003 0 0 0 8 10a2 2 0 1 0-.518-3.932L3.707 2.293a1 1 0 0 0-1.414 1.414l3.775 3.775Z" />
-                  </svg>
-                  <span className="text-sm ml-4 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200 truncate">
-                    Job Skills Network
-                  </span>
-                </NavLink>
-              </li>
-
-              {/* Key Findings */}
-              <li className={`px-3 py-2 rounded-lg mb-0.5 last:mb-0 ${onFindings ? 'bg-violet-500/10 dark:bg-violet-500/20' : ''}`}>
-                <NavLink
-                  end
-                  to="/key-findings"
-                  className={`flex items-center font-medium ${onFindings ? 'text-violet-500' : 'text-gray-800 dark:text-gray-100 hover:text-gray-900 dark:hover:text-white'}`}
-                >
-                  <svg className={`shrink-0 fill-current ${onFindings ? 'text-violet-500' : 'text-gray-400 dark:text-gray-500'}`} xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16">
-                    <path d="M1 9h3v6H1V9Zm5-4h3v10H6V5Zm5-4h3v14h-3V1Z" />
-                  </svg>
-                  <span className="text-sm ml-4 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200 truncate">
-                    Key Findings
-                  </span>
-                </NavLink>
-              </li>
-            </ul>
-          </div>
+              <ul className="mt-3">
+                {g.list.map(it => (
+                  <li
+                    key={it.to}
+                    className={`px-3 py-2 rounded-lg mb-0.5 last:mb-0 ${it.on ? 'bg-violet-500/10 dark:bg-violet-500/20' : ''}`}
+                  >
+                    <NavLink
+                      end
+                      to={it.to}
+                      className={`flex items-center font-medium ${it.on ? 'text-violet-500' : 'text-gray-800 dark:text-gray-100 hover:text-gray-900 dark:hover:text-white'}`}
+                    >
+                      <svg
+                        className={`shrink-0 fill-current ${it.on ? 'text-violet-500' : 'text-gray-400 dark:text-gray-500'}`}
+                        xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16"
+                      >
+                        {it.icon.map((d, i) => <path key={i} d={d} />)}
+                      </svg>
+                      <span className="text-sm ml-4 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200 truncate">
+                        {it.label}
+                      </span>
+                    </NavLink>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
         </div>
 
       </div>

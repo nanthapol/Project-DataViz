@@ -1,11 +1,14 @@
 import React, { useEffect } from 'react';
-import { Routes, Route, useLocation } from 'react-router-dom';
+import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
 
 import './css/style.css';
 import './charts/ChartjsConfig';
 
 import JobSkills from './pages/JobSkills';
-import KeyFindings from './pages/KeyFindings';
+import StacksPage from './pages/StacksPage';
+import CompanyPage from './pages/CompanyPage';
+import TopSkillsPage from './pages/TopSkillsPage';
+import AboutData from './pages/AboutData';
 
 function App() {
   const location = useLocation();
@@ -20,7 +23,11 @@ function App() {
     <Routes>
       <Route path="/" element={<JobSkills />} />
       <Route path="/job-skills" element={<JobSkills />} />
-      <Route path="/key-findings" element={<KeyFindings />} />
+      <Route path="/skill-stacks" element={<StacksPage />} />
+      <Route path="/company-check" element={<CompanyPage />} />
+      <Route path="/top-skills" element={<TopSkillsPage />} />
+      <Route path="/about-data" element={<AboutData />} />
+      <Route path="/key-findings" element={<Navigate to="/skill-stacks" replace />} />
     </Routes>
   );
 }

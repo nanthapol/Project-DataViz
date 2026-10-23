@@ -136,3 +136,33 @@
     border-color: var(--color-gray-200, currentColor);
   }
 }
+.jsn .bc-top select { padding: 6px 34px 6px 14px; min-width: 76px; }
+/* ---------- At a glance ---------- */
+.jsn .sm-row { background: var(--cv); border-radius: 18px; padding: 14px 18px; margin-bottom: 10px; }
+.jsn .sm-row > b { font-family: var(--f-head, inherit); font-size: 17px; }
+.jsn .sm-row ul { margin: 8px 0 0; padding-left: 18px; }
+.jsn .sm-row li { margin-bottom: 4px; font-size: 14px; }
+.jsn .sm-row li b { color: var(--tx); }
+/* ช่อง Scope ใน Most Demanded Skills: กันลูกศรทับตัวอักษร */
+.jsn .bc-top select {
+  width: 210px !important;
+  padding: 6px 38px 6px 14px !important;
+  background-position: right 14px center !important;
+  text-overflow: ellipsis;
+}
+/* ช่อง Top (ตัวเลข 5-20) ใช้ความกว้างเล็กกว่า */
+.jsn .bc-top:last-child select {
+  width: 84px !important;
+}
+/* ช่อง Scope ใน Most Demanded Skills: กันลูกศรทับตัวอักษร */
+.jsn .bc-top select {
+  width: 210px !important;
+  padding: 6px 38px 6px 14px !important;
+  background-position: right 14px center !important;
+  text-overflow: ellipsis;
+}
+/* ช่อง Top (ตัวเลข 5-20) ใช้ความกว้างเล็กกว่า */
+.jsn .bc-top:last-child select {
+  width: 84px !important;
+}
+

@@ -3,6 +3,7 @@ import { useLocation } from 'react-router-dom';
 import Sidebar from '../partials/Sidebar';
 import Header from '../partials/Header';
 import JobPicker from '../components/JobPicker';
+import Summary from '../components/Summary';
 import SkillStacks from '../components/SkillStacks';
 import CompanyCheck from '../components/CompanyCheck';
 import SkillBarChart from '../components/SkillBarChart';
@@ -54,6 +55,7 @@ export default function KeyFindings() {
                       <div className="card"><span className="note">Select up to 5 job titles to see key findings.</span></div>
                     ) : (
                       <>
+                        <Summary S={data.S} C={data.C} sel={sel} />
                         <SkillStacks S={data.S} sel={sel} />
                         <CompanyCheck C={data.C} sel={sel} />
                         <SkillBarChart J={data.J} sel={sel} />

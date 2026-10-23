@@ -359,3 +359,46 @@ html.dark body:has(.jsn) #sidebar li[class*="bg-violet"] svg { fill: #1c2430 !im
 .jsn .cc-t { width: 100%; border-collapse: collapse; font-size: 13px; }
 .jsn .cc-t th { text-align: left; color: var(--mu); font-weight: 600; padding: 8px 10px; border-bottom: 1px solid var(--bd); }
 .jsn .cc-t td { padding: 8px 10px; border-bottom: 1px solid var(--bd); }
+
+/* ---------- About this data ---------- */
+.jsn .dn-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 12px; margin-bottom: 14px; }
+.jsn .dn-stats > div { background: var(--cv); border-radius: 18px; padding: 12px 16px; }
+.jsn .dn-stats b { display: block; font-family: var(--f-head, inherit); font-size: 22px; }
+.jsn .dn-stats span { color: var(--mu); font-size: 12px; }
+.jsn ul.dn { margin: 0; padding-left: 18px; }
+.jsn ul.dn li { margin-bottom: 8px; font-size: 14px; }
+.jsn ul.dn li b { color: var(--tx); }
+
+/* ================= Larger small text (min 14px) ================= */
+.jsn { font-size: 14px; }
+
+.jsn .note,
+.jsn .lg2,
+.jsn .chip-legend,
+.jsn .st-h span,
+.jsn .st-only,
+.jsn .cc-stats span,
+.jsn .cc-t,
+.jsn .fnote,
+.jsn .fnote span,
+.jsn .dn-stats span,
+.jsn .bc-t b,
+.jsn .tsi em { font-size: 14px; }
+
+.jsn .opt span,
+.jsn .bc-ticks span { font-size: 13px; }
+
+.jsn .chip { font-size: 14px; padding: 5px 13px; }
+.jsn svg text.skt,
+.jsn svg text.elbl { font-size: 14px; }
+.jsn #tt { font-size: 14px; max-width: 290px; }
+
+/* ปรับพื้นที่ให้พอดีกับตัวอักษรที่ใหญ่ขึ้น */
+.jsn .bc-r { grid-template-columns: 190px minmax(0, 1fr); }
+.jsn .bc-t { height: 32px; }
+.jsn .cc-stats b { font-size: 28px; }
+.jsn .lg2 b { width: 12px; height: 12px; }
+
+@media (max-width: 900px) {
+  .jsn .bc-r { grid-template-columns: 130px minmax(0, 1fr); }
+}
