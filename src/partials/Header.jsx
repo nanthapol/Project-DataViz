@@ -1,7 +1,5 @@
 import React from 'react';
 
-import ThemeToggle from '../components/ThemeToggle';
-
 function Header({
   sidebarOpen,
   setSidebarOpen,
@@ -33,10 +31,8 @@ function Header({
 
           </div>
 
-          {/* Header: Right side */}
-          <div className="flex items-center space-x-3">
-            <ThemeToggle />
-          </div>
+          {/* Header: Right side (ตัดปุ่มสลับธีมออกแล้ว) */}
+          <div className="flex items-center space-x-3" />
 
         </div>
       </div>

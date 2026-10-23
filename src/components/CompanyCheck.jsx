@@ -4,24 +4,43 @@ export default function CompanyCheck({ C, sel }) {
   if (!sel.length) return null;
   const o = C.overall;
   const nTitles = Object.keys(C.titles).length;
+  const rows = sel.map(j => ({ j, t: C.titles[j] })).filter(r => r.t);
+
+  const status = t => {
+    if (t.p === null) return 'na';
+    if (t.p >= 0.05) return 'none';
+    return t.p < C.alpha_corrected ? 'found' : 'weak';
+  };
 
   const reading = t => {
-    if (t.p === null) return 'Too few companies to test';
-    let r;
-    if (t.p >= 0.05) r = 'No evidence of a link between company and stack';
-    else if (t.p < C.alpha_corrected) r = 'Link found';
-    else r = `Weak signal, not significant after correcting for ${nTitles} titles`;
+    const r = {
+      na: 'Too few companies to test',
+      none: 'No evidence of a link between company and stack',
+      weak: `Weak signal, not significant after correcting for ${nTitles} titles`,
+      found: 'Link found',
+    }[status(t)];
     return t.postings < SMALL ? `${r}. Small sample: a weak link could be missed` : r;
   };
+
+  const found = rows.filter(r => status(r.t) === 'found').map(r => r.j);
+  const tested = rows.filter(r => status(r.t) !== 'na').length;
+  const headline = found.length
+    ? `A link between company and stack was found for: ${found.join(', ')}.`
+    : tested
+      ? 'For the selected titles, the test found no evidence that company decides the stack. This is not proof that there is no effect, especially for small samples.'
+      : 'None of the selected titles had enough companies to test.';
 
   return (
     <div className="card">
       <h2>Does the company decide the skills?</h2>
       <p className="note" style={{ marginTop: -6 }}>
         If companies had their own preferences, each company would favor one stack of a title.
-        The data does not show this.
       </p>
+      <p className="cc-headline">{headline}</p>
 
+      <p className="note">
+        <b>All titles</b> (whole dataset, does not change with your selection)
+      </p>
       <div className="cc-stats">
         <div>
           <b>{(o.share_groups_multi_stack * 100).toFixed(1)}%</b>
@@ -36,37 +55,43 @@ export default function CompanyCheck({ C, sel }) {
       </div>
 
       <p className="note">
-        Even with no company preference, a company posting a title 4 times would land in 2+ stacks about 98% of the time
-        (4 stacks of about 25% each). So this figure shows companies do not stick to one stack; the p-values below are the formal check.
+        Companies posting a title several times would often land in 2+ stacks even with no preference,
+        so the share above does not show a preference on its own. The p-values below are the formal check.
       </p>
 
       <div className="cc-wrap">
         <table className="cc-t">
           <thead>
-            <tr><th>Job title</th><th>Companies tested</th><th>Postings</th><th>p-value</th><th>Reading</th></tr>
+            <tr>
+              <th>Job title</th>
+              <th>Companies tested</th>
+              <th>Postings tested<br /><small>(companies with 5+ postings)</small></th>
+              <th>p-value</th>
+              <th>Reading</th>
+            </tr>
           </thead>
           <tbody>
-            {sel.map(j => {
-              const t = C.titles[j];
-              return (
-                <tr key={j}>
-                  <td>{j}</td>
-                  <td>{t.companies}</td>
-                  <td>{t.postings.toLocaleString()}</td>
-                  <td>{t.p === null ? '-' : t.p.toFixed(3)}</td>
-                  <td>{reading(t)}</td>
-                </tr>
-              );
-            })}
+            {rows.map(({ j, t }) => (
+              <tr key={j}>
+                <td>{j}</td>
+                <td>{t.companies.toLocaleString()}</td>
+                <td>
+                  {t.postings.toLocaleString()}
+                  {t.postings < SMALL && <span className="cc-small"> small n</span>}
+                </td>
+                <td>{t.p === null ? '-' : t.p.toFixed(3)}</td>
+                <td><span className={'cc-badge ' + status(t)}>{reading(t)}</span></td>
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>
 
       <p className="note">
-        Test: do the stacks split differently across companies? p-value is the chance of seeing a split this uneven if the
-        company had no effect; p &ge; 0.05 means the split looks the same across companies. Only companies with 5+ postings
-        of the title were tested, and titles with fewer than {SMALL.toLocaleString()} tested postings are flagged as small samples.
-        With {nTitles} titles tested at once, a result counts as real only when p &lt; {C.alpha_corrected}.
+        Test: do the stacks split differently across companies? The p-value is the chance of seeing a split at least this
+        uneven if company had no effect; p &ge; 0.05 means the split looks the same across companies. Only companies with
+        5+ postings of the title were tested, and titles with fewer than {SMALL.toLocaleString()} tested postings are flagged
+        as small samples. With {nTitles} titles tested at once, a result counts as real only when p &lt; {C.alpha_corrected}.
       </p>
     </div>
   );

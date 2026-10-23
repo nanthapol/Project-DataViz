@@ -402,3 +402,34 @@ html.dark body:has(.jsn) #sidebar li[class*="bg-violet"] svg { fill: #1c2430 !im
 @media (max-width: 900px) {
   .jsn .bc-r { grid-template-columns: 130px minmax(0, 1fr); }
 }
+
+.jsn {
+  --c-core: #6d5bd0;
+  --c-mid: #aab4c3;
+  --c-uniq: #e9a23b;
+  --c-none: #9aa5b1;
+  --c-weak: #e9a23b;
+  --c-found: #2a9d8f;
+}
+.chip.core { background: var(--c-core); color: #fff; }
+.chip.mid  { background: color-mix(in srgb, var(--c-mid) 30%, transparent); border: 1px solid var(--c-mid); }
+.chip.uniq { background: color-mix(in srgb, var(--c-uniq) 25%, transparent); border: 1px solid var(--c-uniq); font-weight: 600; }
+
+.insight { background: color-mix(in srgb, var(--c-core) 8%, transparent); border-left: 4px solid var(--c-core);
+  border-radius: 8px; padding: 10px 14px; margin: 10px 0; }
+.insight p { margin: 0 0 4px; }
+.insight-sub span { display: block; font-size: .92em; }
+
+.base-note { background: #f1f4f8; border-radius: 8px; padding: 8px 12px; margin: 0 0 14px; font-size: .9em; }
+
+.cc-headline { font-weight: 600; margin: 8px 0; }
+.cc-badge { display: inline-block; padding: 2px 8px; border-radius: 6px; border: 1px solid var(--c-none); color: inherit; }
+.cc-badge.none, .cc-badge.na { background: transparent; color: #66707c; }
+.cc-badge.weak  { border-color: var(--c-weak); }
+.cc-badge.found { border-color: var(--c-found); background: color-mix(in srgb, var(--c-found) 15%, transparent); }
+.cc-small { font-size: .8em; color: #66707c; }
+   .cc-stats span { opacity: .9; }
+
+   header button[aria-label*="theme" i],
+header .theme-toggle { display: none; }
+   .base-note { font-size: 1em; padding: 10px 14px; }

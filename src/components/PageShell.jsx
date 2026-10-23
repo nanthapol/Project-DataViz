@@ -2,11 +2,12 @@ import { useState } from 'react';
 import Sidebar from '../partials/Sidebar';
 import Header from '../partials/Header';
 import JobPicker from './JobPicker';
+import BaseNote from './BaseNote';
 import useJobData from '../utils/useJobData';
 import useSelection, { usePickerOpen } from '../utils/useSelection';
 import '../css/jobskills.css';
 
-export default function PageShell({ title, picker = true, children }) {
+export default function PageShell({ title, picker = true, basis, children }) {
   const { data, err } = useJobData();
   const { sel: stored, setSel, toggle, MAX } = useSelection();
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -26,7 +27,12 @@ export default function PageShell({ title, picker = true, children }) {
               <>
                 <div className="head"><h1>{title}</h1></div>
 
-                {!picker ? children({ data, sel }) : (
+                {!picker ? (
+                  <>
+                    <BaseNote J={data.J} sel={sel} basis={basis} />
+                    {children({ data, sel })}
+                  </>
+                ) : (
                   <div className={'grid' + (pickerOpen ? '' : ' full')}>
                     {pickerOpen && (
                       <div>
@@ -47,7 +53,12 @@ export default function PageShell({ title, picker = true, children }) {
 
                       {sel.length === 0
                         ? <div className="card"><span className="note">Select up to 5 job titles to see results.</span></div>
-                        : children({ data, sel })}
+                        : (
+                          <>
+                            <BaseNote J={data.J} sel={sel} basis={basis} />
+                            {children({ data, sel })}
+                          </>
+                        )}
                     </div>
                   </div>
                 )}

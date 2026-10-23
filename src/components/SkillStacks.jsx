@@ -1,6 +1,8 @@
 import { useMemo, useState } from 'react';
 import { pct } from '../utils/Utils';
 
+const RANK = { core: 0, mid: 1, uniq: 2 };
+
 export default function SkillStacks({ S, sel }) {
   const [pick, setPick] = useState(null);
   const job = sel.includes(pick) ? pick : sel[0];
@@ -8,16 +10,25 @@ export default function SkillStacks({ S, sel }) {
   const info = useMemo(() => {
     if (!job) return null;
     const stacks = [...S[job]].sort((a, b) => b.postings - a.postings);
-    const cnt = new Map();                                   // ทักษะอยู่ในกี่ชุด
-    stacks.forEach(s => s.skills.forEach(k => cnt.set(k, (cnt.get(k) || 0) + 1)));
-    const core = [...cnt].filter(([, c]) => c === stacks.length).map(([k]) => k);
+    const k = stacks.length;
+    const where = new Map();                       // skill -> [index ของชุดที่มี]
+    stacks.forEach((s, i) => s.skills.forEach(x => {
+      if (!where.has(x)) where.set(x, []);
+      where.get(x).push(i);
+    }));
+    const kind = x => {
+      const c = where.get(x).length;
+      return c === k ? 'core' : c === 1 ? 'uniq' : 'mid';
+    };
+    const core = [...where.keys()].filter(x => kind(x) === 'core');
+    const uniq = [...where.keys()].filter(x => kind(x) === 'uniq');
+    const mid = where.size - core.length - uniq.length;
     const n = stacks.reduce((a, s) => a + s.postings, 0);
-    return { stacks, cnt, core, n };
+    return { stacks, k, where, kind, core, uniqCount: uniq.length, mid, n, total: where.size };
   }, [S, job]);
 
   if (!job) return null;
-  const { stacks, cnt, core, n } = info;
-  const k = stacks.length;
+  const { stacks, k, where, kind, core, uniqCount, mid, n, total } = info;
 
   return (
     <div className="card">
@@ -34,20 +45,43 @@ export default function SkillStacks({ S, sel }) {
       </div>
 
       <p className="st-sum">
-        <b>{job}</b>: {n.toLocaleString()} postings in {k} stacks.{' '}
-        {core.length
-          ? <>In every stack: <b>{core.join(', ')}</b>.</>
-          : 'No skill appears in every stack.'}
+        <b>{job}</b>: {n.toLocaleString()} postings in {k} stacks, {total} distinct skills.
       </p>
 
+      {/* Insight: คำนวณจากข้อมูลจริง */}
+      <div className="insight">
+        {k < 2 ? (
+          <p>This title has only one stack, so there is nothing to compare.</p>
+        ) : (
+          <>
+            <p>
+              All {k} stacks share <b>{core.length}</b> skill{core.length === 1 ? '' : 's'}
+              {core.length ? <>: <b>{core.join(', ')}</b></> : ''}.
+              {' '}Percentages below are shares of all {n.toLocaleString()} {job} postings.
+            </p>
+            <p className="insight-sub">
+              {stacks.map((s, i) => {
+                const only = s.skills.filter(x => kind(x) === 'uniq');
+                return (
+                  <span key={i}>
+                    <b>Stack {i + 1}</b> ({pct(s.postings / n)}): {only.length ? only.join(', ') : 'no unique skill'}
+                  </span>
+                );
+              })}
+            </p>
+          </>
+        )}
+      </div>
+
       <div className="chip-legend">
-        <span><i className="chip core" />In every stack</span>
-        <span><i className="chip mid" />In some stacks</span>
-        <span><i className="chip uniq" />Only in this stack</span>
+        <span><i className="chip core" />In every stack ({core.length})</span>
+        <span><i className="chip mid" />In some stacks ({mid})</span>
+        <span><i className="chip uniq" />Only in one stack ({uniqCount})</span>
       </div>
 
       {stacks.map((s, i) => {
-        const only = s.skills.filter(x => cnt.get(x) === 1);
+        const skills = [...s.skills].sort(
+          (a, b) => RANK[kind(a)] - RANK[kind(b)] || a.localeCompare(b));
         return (
           <div className="st-row" key={i}>
             <div className="st-h">
@@ -56,15 +90,14 @@ export default function SkillStacks({ S, sel }) {
             </div>
             <div className="st-bar"><i style={{ width: `${(s.postings / n) * 100}%` }} /></div>
             <div className="chips">
-              {s.skills.map(x => {
-                const c = cnt.get(x);
-                const cls = c === k ? 'core' : c === 1 ? 'uniq' : 'mid';
-                return <span key={x} className={'chip ' + cls} title={`${x}: in ${c} of ${k} stacks`}>{x}</span>;
+              {skills.map(x => {
+                const at = where.get(x);
+                const cls = kind(x);
+                const label = cls === 'mid' ? `${x} · ${at.length}/${k}` : x;
+                const tip = `${x}: in ${at.length} of ${k} stacks (stack ${at.map(v => v + 1).join(', ')})`;
+                return <span key={x} className={'chip ' + cls} title={tip}>{label}</span>;
               })}
             </div>
-            <p className="st-only">
-              {only.length ? <>Only in this stack: <b>{only.join(', ')}</b></> : 'No skill unique to this stack.'}
-            </p>
           </div>
         );
       })}
