@@ -67,8 +67,8 @@ export default function NetworkGraph({ J, L, sel, level, minS }) {
 
     const g = svg.append('g');
     const zoom = d3.zoom()
-    .scaleExtent([0.4, 4])
-    .on('zoom', e => g.attr('transform', e.transform));
+      .scaleExtent([0.2, 6])
+      .on('zoom', e => g.attr('transform', e.transform));
     svg.call(zoom).on('dblclick.zoom', null);
     const sLinks = links.filter(l => l.t === 's');
 
@@ -151,12 +151,6 @@ export default function NetworkGraph({ J, L, sel, level, minS }) {
       .force('x', d3.forceX(W / 2).strength(0.04))
       .force('y', d3.forceY(H / 2).strength(0.06))
       .on('tick', () => {
-        nodes.forEach(n => {
-          const padX = Math.max(n.r, n.hw) + 4;
-          const padB = n.t === 'job' ? 34 : 24;
-          n.x = Math.max(padX, Math.min(W - padX, n.x));
-          n.y = Math.max(n.r + 4, Math.min(H - n.r - padB, n.y));
-        });
         const pos = s => s.attr('x1', d => d.source.x).attr('y1', d => d.source.y)
           .attr('x2', d => d.target.x).attr('y2', d => d.target.y);
         pos(lk); pos(hit);
@@ -169,7 +163,10 @@ export default function NetworkGraph({ J, L, sel, level, minS }) {
       .on('drag', (e, d) => { d.fx = e.x; d.fy = e.y; })
       .on('end', (e, d) => { if (!e.active) sim.alphaTarget(0); d.fx = null; d.fy = null; }));
 
-    parts.current = { apply };
+    parts.current = {
+      apply,
+      reset: () => svg.transition().duration(300).call(zoom.transform, d3.zoomIdentity),
+    };
     return () => sim.stop();
   }, [J, L, sel, level, minS, width]);
 
@@ -183,6 +180,7 @@ export default function NetworkGraph({ J, L, sel, level, minS }) {
     <div id="cv" ref={wrap}>
       <svg ref={svgRef} />
       <div id="tt" ref={ttRef} />
+      <button className="reset-view" onClick={() => parts.current.reset?.()}>Reset view</button>
       {!sel.length && <div className="empty">Select up to 5 job titles to see their skills.</div>}
     </div>
   );

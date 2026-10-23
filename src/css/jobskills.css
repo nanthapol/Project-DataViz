@@ -432,8 +432,15 @@ html.dark body:has(.jsn) #sidebar li[class*="bg-violet"] svg { fill: #1c2430 !im
 .jsn p, .jsn li { overflow-wrap: anywhere; }
 .jsn img { max-width: 100%; height: auto; }
 
-/* กราฟ: ลาก node ได้ ส่วนเลื่อน/ซูมหน้าเป็นของเบราว์เซอร์ */
-.jsn #cv svg { touch-action: none; }
+/* กราฟ: ซูม/เลื่อนอิสระภายในกราฟ */
+.jsn #cv svg { touch-action: none; cursor: grab; }
+.jsn #cv svg:active { cursor: grabbing; }
+
+.jsn .reset-view {
+  position: absolute; right: 12px; bottom: 12px; z-index: 3;
+  border: 1px solid var(--bd); background: var(--card); color: var(--tx);
+  padding: 6px 12px; border-radius: 999px; cursor: pointer; font: inherit;
+}
 
 /* ตารางเลื่อนซ้ายขวาในกรอบของตัวเอง */
 .jsn .cc-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
@@ -456,3 +463,4 @@ html.dark body:has(.jsn) #sidebar li[class*="bg-violet"] svg { fill: #1c2430 !im
   .jsn .bc-l span { margin-right: 4px; }
   .jsn .bc-t b { font-size: 12px; }
 }
+
