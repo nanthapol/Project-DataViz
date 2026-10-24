@@ -37,7 +37,7 @@ export default function DataNotes({ M }) {
         </li>
         <li>
           <b>Skills were cleaned.</b> Combined entries such as Python/JavaScript were split into two skills and
-          duplicate names merged (for example JIRA and Jira), which reduced 190 skills to {M.n_skills}. TCP/IP, PL/SQL,
+          duplicate names merged (for example JIRA and Jira), which reduced 192 skills to {M.n_skills}. TCP/IP, PL/SQL,
           HTML/CSS and Cisco Routers/Switches were kept as single skills.
         </li>
         <li>
